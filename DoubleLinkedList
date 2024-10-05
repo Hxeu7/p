@@ -1,0 +1,262 @@
+DNode head;
+DNode tail;
+public void insertFirst(String data) {
+DNode newNode = new DNode(data);
+if (head == null) {
+head = tail= newNode;
+} else {
+head.prev = newNode;
+newNode.next = head;
+head = newNode;
+}
+}
+/************************ */
+/* */
+public void insertLast(String data) {
+DNode newNode = new DNode(data);
+  if (head ==null) {
+            head = tail = newNode;
+            
+        }
+
+        newNode.next = null;
+        newNode.prev = tail;
+        tail.next = newNode;
+        tail = newNode;
+
+}
+/************* */
+
+public void insertAfter(String afterData, String data) {
+    DNode cur = head;
+        DNode newNode = new DNode(data);
+        if (head==null) {
+            System.out.println("no node with this value " + afterData);
+            return;
+        }
+        for (; cur != null && cur.data != afterData; cur = cur.next) ;
+
+
+        if (cur == null) {
+
+            System.out.println("no node with this value " + afterData);
+          
+        }
+        if (cur == tail) 
+            insertLast(data);
+
+           
+        
+
+        newNode.next = cur.next;
+        newNode.prev = cur;
+        cur.next.prev = newNode;
+        cur.next = newNode;
+}
+
+/********/
+void insertInBetween(String element, String data) {
+        DNode newNode = new DNode(data);
+        if (head==null) {
+            System.out.println("Empty list");
+            
+        }
+        if (head.data == element) {
+            newNode.next = head;
+            head.prev = newNode;
+            head = newNode;
+        } else if (tail.data == element) {
+            newNode.next = tail;
+            newNode.prev = tail.prev;
+            tail.prev.next = newNode;
+            tail.prev = newNode;
+        } else {
+            DNode curr = head;
+            while (curr != null) {
+                if (curr.data == element) {
+                    newNode.next = curr;
+                    newNode.prev = curr.prev;
+                    curr.prev.next = newNode;
+                    curr.prev = newNode;
+                    
+                }
+                curr = curr.next;
+            }
+            if (curr == null) {
+                System.out.println("Not found");
+            }
+        }
+ }
+/********* */
+public void deleteFirst() {
+if (head == null) {
+System.out.println("List is empty");
+return;
+}
+head = head.next;
+if(head != null){
+head.prev = null;
+}
+}
+/* */
+public boolean deleteNode(String target) {
+if (head == null || target == null) {
+return false;
+}
+DNode cur = head;
+while (cur != null && !cur.data.equals(target)) {
+cur = cur.next;
+}
+if (cur == null) {
+return false;
+}
+if (cur == head) {
+head = cur.next;
+
+if (head != null) {
+head.prev = null;
+}
+} else {
+cur.prev.next = cur.next;
+if (cur.next != null) {
+cur.next.prev = cur.prev;
+}
+}
+return true;
+}
+/****** */
+public void deleteLast() {
+if (head == null) 
+System.out.println("List is empty");
+
+ 
+        if (head==tail) {
+            head = tail = null;
+            return;
+        }
+        tail.prev.next = null;
+        tail = tail.prev;
+}
+
+/**** */
+void deleteAfter(String afterData) {
+if (head == null) {
+System.out.println("List is empty");
+return;
+}
+DNode cur = head;
+while (cur != null && cur.data != afterData) {
+cur = cur.next;
+}
+if (cur == null) {
+System.out.println("List does not contain the target node");
+return;
+}
+if (cur.next == null) {
+System.out.println("The target node is the last node");
+return;
+}
+cur.next = cur.next.next;
+if(cur.next != null){
+cur.next.prev = cur;
+
+}
+}
+/***** */
+public void displayFirst() {
+if (head == null) {
+System.out.println("List is empty");
+
+}
+ System.out.println("head = " + head.data);
+}
+/********* */
+void displayList() {
+if (head == null) {
+System.out.println("List is empty!!");
+return;
+}
+DNode cur = head;
+while (cur != null) {
+System.out.print(cur.data + " -> ");
+cur = cur.next;
+}
+System.out.println("Null");
+}
+/******* */
+public void DisplayTail() {
+if (head == null) 
+System.out.println("List is empty.");
+
+System.out.println("tail ="+tail.data);
+}
+/* */
+public void displayCount() {
+int count = 0;
+DNode current = head;
+while (current != null) {
+count++;
+
+current = current.next;
+}
+System.out.println("Count= " + count);
+}
+/* */
+int count() {
+DNode current = head;
+int count = 0;
+while (current != null) {
+count++;
+current = current.next;
+}
+return count;
+}
+/*** */
+public int ComputesSumLastNodes(int n) {
+if (tail == null || n <= 0) {
+return 0;
+}
+int sum = 0;
+DNode current = tail;
+for (int i = 0; i < n && current != null; i++) {
+sum += Integer.parseInt(current.data);
+current = current.prev;
+}
+return sum;
+}
+/** */
+public boolean searchNode(String value) {
+DNode cur = head;
+while (cur != null) {
+if (cur.data == value) {
+return true;
+}
+cur = cur.next;
+}
+return false;
+}
+/************* */
+void displayPreSucc(String val) {
+   DNode
+current = head; DNode succ =
+null;
+DNode pre = null;
+if (current.data == val) {succ =
+current.next;
+
+} else
+while (current != null && current.data != val) {pre =
+current;
+succ = current.next.next;current
+= current.next;
+}
+if (pre != null && succ != null)
+System.out.println(pre.data + " -> " + current.data + " -> "
++ succ.data);
+else if (pre == null && succ != null)
+System.out.println(current.data + " -> " + succ.data);
+else if (pre != null && succ == null)
+System.out.println(pre.data + " -> " + current.data);
+else
+System.out.println(current.data);
+}
